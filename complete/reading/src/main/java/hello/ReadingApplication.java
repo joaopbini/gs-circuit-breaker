@@ -5,24 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 
 @EnableCircuitBreaker
-@RestController
 @SpringBootApplication
 public class ReadingApplication {
 
-  @Autowired
-  private BookService bookService;
+    public static void main(String[] args) {
+        SpringApplication.run(ReadingApplication.class, args);
+    }
 
-  @Bean
-  public RestTemplate rest(RestTemplateBuilder builder) {
-    return builder.build();
-  }
-
-  @RequestMapping("/to-read")
-  public String toRead() {
-    return bookService.readingList();
-  }
-
-  public static void main(String[] args) {
-    SpringApplication.run(ReadingApplication.class, args);
-  }
 }

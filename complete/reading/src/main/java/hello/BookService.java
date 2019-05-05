@@ -9,21 +9,22 @@ import java.net.URI;
 @Service
 public class BookService {
 
-  private final RestTemplate restTemplate;
+    private static final String DEFAULT_RETURN = "Cloud Native Java (O'Reilly)";
 
-  public BookService(RestTemplate rest) {
-    this.restTemplate = rest;
-  }
+    private final RestTemplate restTemplate;
 
-  @HystrixCommand(fallbackMethod = "reliable")
-  public String readingList() {
-    URI uri = URI.create("http://localhost:8090/recommended");
+    public BookService(RestTemplate rest) {
+        this.restTemplate = rest;
+    }
 
-    return this.restTemplate.getForObject(uri, String.class);
-  }
+    @HystrixCommand(fallbackMethod = "reliable")
+    String readingList() {
+        URI uri = URI.create("http://localhost:8090/recommended");
+        return this.restTemplate.getForObject(uri, String.class);
+    }
 
-  public String reliable() {
-    return "Cloud Native Java (O'Reilly)";
-  }
+    String reliable() {
+        return DEFAULT_RETURN;
+    }
 
 }
